@@ -8,7 +8,7 @@
       "getCompletions": "babel-node ./getCompletionsFromDoc.js pyspark.html"
   },
   "keywords": [],
-  "repository": "https://github.com/atom/atom-pyspark",
+  "repository": "https://github.com/Gmousse/atom-pyspark",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
