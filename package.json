@@ -1,0 +1,27 @@
+{
+  "name": "atom-pyspark",
+  "main": "./lib/atom-pyspark",
+  "author": "Guillaume Mousnier",
+  "version": "0.1.0",
+  "description": "A package adding completions, snippets and tools to develop in PySpark (Apache Spark with Python Api)",
+  "scripts": {
+      "getCompletions": "babel-node ./getCompletionsFromDoc.js pyspark.html"
+  },
+  "keywords": [],
+  "repository": "https://github.com/atom/atom-pyspark",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "providedServices": {
+    "autocomplete.provider": {
+      "versions": {
+        "2.0.0": "getProvider"
+      }
+    }
+  },
+  "dependencies": {},
+  "devDependencies": {
+      "babel-cli": "~6.6.5"
+  }
+}
