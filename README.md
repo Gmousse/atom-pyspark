@@ -1,5 +1,5 @@
 # atom-pyspark package
-### v0.1.0
+### v0.2.0
 
 ![A screenshot of your package](./anim.gif)
 
