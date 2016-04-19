@@ -1,7 +1,7 @@
 # atom-pyspark package
-### v0.2.1
+### v0.2.2
 
-![A screenshot of your package](./anim.gif)
+![A screenshot of your package](https://raw.githubusercontent.com/Gmousse/atom-pyspark/master/anim.gif)
 
 An Atom package adding auto-completions, documentation, snippets and tools to develop in PySpark (Apache Spark with Python Api)
 Uses the
