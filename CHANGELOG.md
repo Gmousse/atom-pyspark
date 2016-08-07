@@ -2,7 +2,11 @@
 
 ---
 
+<<<<<<< HEAD
 ## v0.1.1
+=======
+## v0.2.3
+>>>>>>> hotfix/updateDoc
 
 **Author**: Guillaume Mousnier.
 
@@ -12,6 +16,7 @@
 - Updating the api
 
 ---
+<<<<<<< HEAD
 
 ## v0.1.0
 
@@ -22,3 +27,5 @@
 **Changes**:
 - dding PySpark Completions
 Adding a documentation parser in order to generate completions
+=======
+>>>>>>> hotfix/updateDoc

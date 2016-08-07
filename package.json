@@ -2,13 +2,17 @@
   "name": "atom-pyspark",
   "main": "./lib/atom-pyspark",
   "author": "Guillaume Mousnier",
+<<<<<<< HEAD
   "version": "0.1.1",
+=======
+  "version": "0.2.3",
+>>>>>>> hotfix/updateDoc
   "description": "A package adding completions, snippets and tools to develop in PySpark (Apache Spark with Python Api)",
   "scripts": {
     "getCompletions": "babel-node ./getCompletionsFromDoc.js pyspark.html"
   },
   "keywords": [],
-  "repository": "https://github.com/atom/atom-pyspark",
+  "repository": "https://github.com/Gmousse/atom-pyspark",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
