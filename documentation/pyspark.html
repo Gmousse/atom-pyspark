@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyspark package &mdash; PySpark 1.6.1 documentation</title>
+    <title>pyspark package &mdash; PySpark 2.0.0 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.6.1',
+        VERSION:     '2.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,8 +24,9 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="_static/pyspark.js"></script>
-    <link rel="top" title="PySpark 1.6.1 documentation" href="index.html" />
+    <link rel="top" title="PySpark 2.0.0 documentation" href="index.html" />
     <link rel="next" title="pyspark.sql module" href="pyspark.sql.html" />
     <link rel="prev" title="Welcome to Spark Python API Docs!" href="index.html" /> 
   </head>
@@ -40,7 +41,7 @@
           <a href="index.html" title="Welcome to Spark Python API Docs!"
              accesskey="P">previous</a> |</li>
     
-        <li><a href="index.html">PySpark 1.6.1 documentation</a> &raquo;</li>
+        <li><a href="index.html">PySpark 2.0.0 documentation</a> &raquo;</li>
  
       </ul>
     </div>  
@@ -369,6 +370,11 @@ reduce tasks)</p>
 <tt class="descname">emptyRDD</tt><big>(</big><big>)</big><a class="headerlink" href="#pyspark.SparkContext.emptyRDD" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create an RDD that has no partitions or elements.</p>
 </dd></dl>
+
+<dl class="method">
+<dt id="pyspark.SparkContext.getConf">
+<tt class="descname">getConf</tt><big>(</big><big>)</big><a class="headerlink" href="#pyspark.SparkContext.getConf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="pyspark.SparkContext.getLocalProperty">
@@ -875,7 +881,7 @@ an U and one operation for merging two U</p>
 
 <dl class="method">
 <dt id="pyspark.RDD.aggregateByKey">
-<tt class="descname">aggregateByKey</tt><big>(</big><em>zeroValue</em>, <em>seqFunc</em>, <em>combFunc</em>, <em>numPartitions=None</em>, <em>partitionFunc=&lt;function portable_hash at 0x7f1ac7340578&gt;</em><big>)</big><a class="headerlink" href="#pyspark.RDD.aggregateByKey" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">aggregateByKey</tt><big>(</big><em>zeroValue</em>, <em>seqFunc</em>, <em>combFunc</em>, <em>numPartitions=None</em>, <em>partitionFunc=&lt;function portable_hash at 0x7f839c2c6e60&gt;</em><big>)</big><a class="headerlink" href="#pyspark.RDD.aggregateByKey" title="Permalink to this definition">¶</a></dt>
 <dd><p>Aggregate the values of each key, using given combine functions and a neutral
 &#8220;zero value&#8221;. This function can return a different result type, U, than the type
 of the values in this RDD, V. Thus, we need one operation for merging a V into
@@ -888,7 +894,7 @@ allowed to modify and return their first argument instead of creating a new U.</
 <dl class="method">
 <dt id="pyspark.RDD.cache">
 <tt class="descname">cache</tt><big>(</big><big>)</big><a class="headerlink" href="#pyspark.RDD.cache" title="Permalink to this definition">¶</a></dt>
-<dd><p>Persist this RDD with the default storage level (<tt class="xref py py-class docutils literal"><span class="pre">MEMORY_ONLY_SER</span></tt>).</p>
+<dd><p>Persist this RDD with the default storage level (<tt class="xref py py-class docutils literal"><span class="pre">MEMORY_ONLY</span></tt>).</p>
 </dd></dl>
 
 <dl class="method">
@@ -944,13 +950,17 @@ well as <tt class="xref py py-class docutils literal"><span class="pre">other</s
 <dl class="method">
 <dt id="pyspark.RDD.collect">
 <tt class="descname">collect</tt><big>(</big><big>)</big><a class="headerlink" href="#pyspark.RDD.collect" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a list that contains all of the elements in this RDD.</p>
+<dd><p>Return a list that contains all of the elements in this RDD.
+Note that this method should only be used if the resulting array is expected
+to be small, as all the data is loaded into the driver&#8217;s memory.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyspark.RDD.collectAsMap">
 <tt class="descname">collectAsMap</tt><big>(</big><big>)</big><a class="headerlink" href="#pyspark.RDD.collectAsMap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the key-value pairs in this RDD to the master as a dictionary.</p>
+<p>Note that this method should only be used if the resulting data is expected
+to be small, as all the data is loaded into the driver&#8217;s memory.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)])</span><span class="o">.</span><span class="n">collectAsMap</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 <span class="go">2</span>
@@ -962,7 +972,7 @@ well as <tt class="xref py py-class docutils literal"><span class="pre">other</s
 
 <dl class="method">
 <dt id="pyspark.RDD.combineByKey">
-<tt class="descname">combineByKey</tt><big>(</big><em>createCombiner</em>, <em>mergeValue</em>, <em>mergeCombiners</em>, <em>numPartitions=None</em>, <em>partitionFunc=&lt;function portable_hash at 0x7f1ac7340578&gt;</em><big>)</big><a class="headerlink" href="#pyspark.RDD.combineByKey" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">combineByKey</tt><big>(</big><em>createCombiner</em>, <em>mergeValue</em>, <em>mergeCombiners</em>, <em>numPartitions=None</em>, <em>partitionFunc=&lt;function portable_hash at 0x7f839c2c6e60&gt;</em><big>)</big><a class="headerlink" href="#pyspark.RDD.combineByKey" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generic function to combine the elements for each key using a custom
 set of aggregation functions.</p>
 <p>Turns an RDD[(K, V)] into a result of type RDD[(K, C)], for a &#8220;combined
@@ -1028,9 +1038,8 @@ result within a timeout, even if not all tasks have finished.</p>
 </div>
 <p>Return approximate number of distinct elements in the RDD.</p>
 <p>The algorithm used is based on streamlib&#8217;s implementation of
-&#8220;HyperLogLog in Practice: Algorithmic Engineering of a State
-of The Art Cardinality Estimation Algorithm&#8221;, available
-&lt;a href=&#8221;<a class="reference external" href="http://dx.doi.org/10.1145/2452376.2452456">http://dx.doi.org/10.1145/2452376.2452456</a>&#8220;&gt;here&lt;/a&gt;.</p>
+<a class="reference external" href="http://dx.doi.org/10.1145/2452376.2452456">&#8220;HyperLogLog in Practice: Algorithmic Engineering of a State
+of The Art Cardinality Estimation Algorithm&#8221;, available here</a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1141,8 +1150,7 @@ partitioning.</p>
 <dt id="pyspark.RDD.fold">
 <tt class="descname">fold</tt><big>(</big><em>zeroValue</em>, <em>op</em><big>)</big><a class="headerlink" href="#pyspark.RDD.fold" title="Permalink to this definition">¶</a></dt>
 <dd><p>Aggregate the elements of each partition, and then the results for all
-the partitions, using a given associative and commutative function and
-a neutral &#8220;zero value.&#8221;</p>
+the partitions, using a given associative function and a neutral &#8220;zero value.&#8221;</p>
 <p>The function <cite>op(t1, t2)</cite> is allowed to modify <tt class="xref py py-class docutils literal"><span class="pre">t1</span></tt> and return it
 as its result value to avoid object allocation; however, it should not
 modify <tt class="xref py py-class docutils literal"><span class="pre">t2</span></tt>.</p>
@@ -1162,7 +1170,7 @@ applied to a non-distributed collection.</p>
 
 <dl class="method">
 <dt id="pyspark.RDD.foldByKey">
-<tt class="descname">foldByKey</tt><big>(</big><em>zeroValue</em>, <em>func</em>, <em>numPartitions=None</em>, <em>partitionFunc=&lt;function portable_hash at 0x7f1ac7340578&gt;</em><big>)</big><a class="headerlink" href="#pyspark.RDD.foldByKey" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">foldByKey</tt><big>(</big><em>zeroValue</em>, <em>func</em>, <em>numPartitions=None</em>, <em>partitionFunc=&lt;function portable_hash at 0x7f839c2c6e60&gt;</em><big>)</big><a class="headerlink" href="#pyspark.RDD.foldByKey" title="Permalink to this definition">¶</a></dt>
 <dd><p>Merge the values for each key using an associative function &#8220;func&#8221;
 and a neutral &#8220;zeroValue&#8221; which may be added to the result an
 arbitrary number of times, and must not change the result
@@ -1260,7 +1268,7 @@ into a list.</p>
 
 <dl class="method">
 <dt id="pyspark.RDD.groupBy">
-<tt class="descname">groupBy</tt><big>(</big><em>f</em>, <em>numPartitions=None</em>, <em>partitionFunc=&lt;function portable_hash at 0x7f1ac7340578&gt;</em><big>)</big><a class="headerlink" href="#pyspark.RDD.groupBy" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">groupBy</tt><big>(</big><em>f</em>, <em>numPartitions=None</em>, <em>partitionFunc=&lt;function portable_hash at 0x7f839c2c6e60&gt;</em><big>)</big><a class="headerlink" href="#pyspark.RDD.groupBy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return an RDD of grouped items.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">rdd</span><span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
@@ -1272,7 +1280,7 @@ into a list.</p>
 
 <dl class="method">
 <dt id="pyspark.RDD.groupByKey">
-<tt class="descname">groupByKey</tt><big>(</big><em>numPartitions=None</em>, <em>partitionFunc=&lt;function portable_hash at 0x7f1ac7340578&gt;</em><big>)</big><a class="headerlink" href="#pyspark.RDD.groupByKey" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">groupByKey</tt><big>(</big><em>numPartitions=None</em>, <em>partitionFunc=&lt;function portable_hash at 0x7f839c2c6e60&gt;</em><big>)</big><a class="headerlink" href="#pyspark.RDD.groupByKey" title="Permalink to this definition">¶</a></dt>
 <dd><p>Group the values for each key in the RDD into a single sequence.
 Hash-partitions the resulting RDD with numPartitions partitions.</p>
 <p>Note: If you are grouping in order to perform an aggregation (such as a
@@ -1311,17 +1319,17 @@ which means 1&lt;=x&lt;10, 10&lt;=x&lt;20, 20&lt;=x&lt;=50. And on the input of 
 and 50 we would have a histogram of 1,0,1.</p>
 <p>If your histogram is evenly spaced (e.g. [0, 10, 20, 30]),
 this can be switched from an O(log n) inseration to O(1) per
-element(where n = # buckets).</p>
-<p>Buckets must be sorted and not contain any duplicates, must be
+element (where n is the number of buckets).</p>
+<p>Buckets must be sorted, not contain any duplicates, and have
 at least two elements.</p>
-<p>If <cite>buckets</cite> is a number, it will generates buckets which are
+<p>If <cite>buckets</cite> is a number, it will generate buckets which are
 evenly spaced between the minimum and maximum of the RDD. For
-example, if the min value is 0 and the max is 100, given buckets
-as 2, the resulting buckets will be [0,50) [50,100]. buckets must
-be at least 1 If the RDD contains infinity, NaN throws an exception
-If the elements in RDD do not vary (max == min) always returns
-a single bucket.</p>
-<p>It will return an tuple of buckets and histogram.</p>
+example, if the min value is 0 and the max is 100, given <cite>buckets</cite>
+as 2, the resulting buckets will be [0,50) [50,100]. <cite>buckets</cite> must
+be at least 1. An exception is raised if the RDD contains infinity.
+If the elements in the RDD do not vary (max == min), a single bucket
+will be used.</p>
+<p>The return value is a tuple of buckets and histogram.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">51</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">rdd</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">([0, 25, 50], [25, 26])</span>
@@ -1593,7 +1601,7 @@ or meet the confidence.</p>
 
 <dl class="method">
 <dt id="pyspark.RDD.partitionBy">
-<tt class="descname">partitionBy</tt><big>(</big><em>numPartitions</em>, <em>partitionFunc=&lt;function portable_hash at 0x7f1ac7340578&gt;</em><big>)</big><a class="headerlink" href="#pyspark.RDD.partitionBy" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">partitionBy</tt><big>(</big><em>numPartitions</em>, <em>partitionFunc=&lt;function portable_hash at 0x7f839c2c6e60&gt;</em><big>)</big><a class="headerlink" href="#pyspark.RDD.partitionBy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a copy of the RDD partitioned using the specified partitioner.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pairs</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sets</span> <span class="o">=</span> <span class="n">pairs</span><span class="o">.</span><span class="n">partitionBy</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">glom</span><span class="p">()</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
@@ -1609,7 +1617,7 @@ or meet the confidence.</p>
 <dd><p>Set this RDD&#8217;s storage level to persist its values across operations
 after the first time it is computed. This can only be used to assign
 a new storage level if the RDD does not have a storage level set yet.
-If no storage level is specified defaults to (<tt class="xref py py-class docutils literal"><span class="pre">MEMORY_ONLY_SER</span></tt>).</p>
+If no storage level is specified defaults to (<tt class="xref py py-class docutils literal"><span class="pre">MEMORY_ONLY</span></tt>).</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">rdd</span><span class="o">.</span><span class="n">persist</span><span class="p">()</span><span class="o">.</span><span class="n">is_cached</span>
 <span class="go">True</span>
@@ -1686,8 +1694,8 @@ associative binary operator. Currently reduces partitions locally.</p>
 
 <dl class="method">
 <dt id="pyspark.RDD.reduceByKey">
-<tt class="descname">reduceByKey</tt><big>(</big><em>func</em>, <em>numPartitions=None</em>, <em>partitionFunc=&lt;function portable_hash at 0x7f1ac7340578&gt;</em><big>)</big><a class="headerlink" href="#pyspark.RDD.reduceByKey" title="Permalink to this definition">¶</a></dt>
-<dd><p>Merge the values for each key using an associative reduce function.</p>
+<tt class="descname">reduceByKey</tt><big>(</big><em>func</em>, <em>numPartitions=None</em>, <em>partitionFunc=&lt;function portable_hash at 0x7f839c2c6e60&gt;</em><big>)</big><a class="headerlink" href="#pyspark.RDD.reduceByKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Merge the values for each key using an associative and commutative reduce function.</p>
 <p>This will also perform the merging locally on each mapper before
 sending results to a reducer, similarly to a &#8220;combiner&#8221; in MapReduce.</p>
 <p>Output will be partitioned with <tt class="xref py py-class docutils literal"><span class="pre">numPartitions</span></tt> partitions, or
@@ -1704,7 +1712,7 @@ Default partitioner is hash-partition.</p>
 <dl class="method">
 <dt id="pyspark.RDD.reduceByKeyLocally">
 <tt class="descname">reduceByKeyLocally</tt><big>(</big><em>func</em><big>)</big><a class="headerlink" href="#pyspark.RDD.reduceByKeyLocally" title="Permalink to this definition">¶</a></dt>
-<dd><p>Merge the values for each key using an associative reduce function, but
+<dd><p>Merge the values for each key using an associative and commutative reduce function, but
 return the results immediately to the master as a dictionary.</p>
 <p>This will also perform the merging locally on each mapper before
 sending results to a reducer, similarly to a &#8220;combiner&#8221; in MapReduce.</p>
@@ -1737,7 +1745,7 @@ using <cite>coalesce</cite>, which can avoid performing a shuffle.</p>
 
 <dl class="method">
 <dt id="pyspark.RDD.repartitionAndSortWithinPartitions">
-<tt class="descname">repartitionAndSortWithinPartitions</tt><big>(</big><em>numPartitions=None</em>, <em>partitionFunc=&lt;function portable_hash at 0x7f1ac7340578&gt;</em>, <em>ascending=True</em>, <em>keyfunc=&lt;function &lt;lambda&gt; at 0x7f1ac7345cf8&gt;</em><big>)</big><a class="headerlink" href="#pyspark.RDD.repartitionAndSortWithinPartitions" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">repartitionAndSortWithinPartitions</tt><big>(</big><em>numPartitions=None</em>, <em>partitionFunc=&lt;function portable_hash at 0x7f839c2c6e60&gt;</em>, <em>ascending=True</em>, <em>keyfunc=&lt;function &lt;lambda&gt; at 0x7f839c2cf668&gt;</em><big>)</big><a class="headerlink" href="#pyspark.RDD.repartitionAndSortWithinPartitions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Repartition the RDD according to the given partitioner and, within each resulting partition,
 sort records by their keys.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)])</span>
@@ -2053,7 +2061,7 @@ RDD&#8217;s key and value types. The mechanism is as follows:</p>
 
 <dl class="method">
 <dt id="pyspark.RDD.sortByKey">
-<tt class="descname">sortByKey</tt><big>(</big><em>ascending=True</em>, <em>numPartitions=None</em>, <em>keyfunc=&lt;function &lt;lambda&gt; at 0x7f1ac7345de8&gt;</em><big>)</big><a class="headerlink" href="#pyspark.RDD.sortByKey" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">sortByKey</tt><big>(</big><em>ascending=True</em>, <em>numPartitions=None</em>, <em>keyfunc=&lt;function &lt;lambda&gt; at 0x7f839c2cf758&gt;</em><big>)</big><a class="headerlink" href="#pyspark.RDD.sortByKey" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sorts this RDD, which is assumed to consist of (key, value) pairs.
 # noqa</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tmp</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)]</span>
@@ -2147,6 +2155,8 @@ or meet the confidence.</p>
 <p>It works by first scanning one partition, and use the results from
 that partition to estimate the number of additional partitions needed
 to satisfy the limit.</p>
+<p>Note that this method should only be used if the resulting array is expected
+to be small, as all the data is loaded into the driver&#8217;s memory.</p>
 <p>Translated from the Scala implementation in RDD#take().</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">[2, 3]</span>
@@ -2163,6 +2173,8 @@ to satisfy the limit.</p>
 <tt class="descname">takeOrdered</tt><big>(</big><em>num</em>, <em>key=None</em><big>)</big><a class="headerlink" href="#pyspark.RDD.takeOrdered" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the N elements from a RDD ordered in ascending order or as
 specified by the optional key function.</p>
+<p>Note that this method should only be used if the resulting array is expected
+to be small, as all the data is loaded into the driver&#8217;s memory.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span><span class="o">.</span><span class="n">takeOrdered</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 <span class="go">[1, 2, 3, 4, 5, 6]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">takeOrdered</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="n">x</span><span class="p">)</span>
@@ -2175,6 +2187,8 @@ specified by the optional key function.</p>
 <dt id="pyspark.RDD.takeSample">
 <tt class="descname">takeSample</tt><big>(</big><em>withReplacement</em>, <em>num</em>, <em>seed=None</em><big>)</big><a class="headerlink" href="#pyspark.RDD.takeSample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a fixed-size sampled subset of this RDD.</p>
+<p>Note that this method should only be used if the resulting array is expected
+to be small, as all the data is loaded into the driver&#8217;s memory.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">rdd</span><span class="o">.</span><span class="n">takeSample</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 <span class="go">20</span>
@@ -2196,16 +2210,20 @@ specified by the optional key function.</p>
 <dt id="pyspark.RDD.toLocalIterator">
 <tt class="descname">toLocalIterator</tt><big>(</big><big>)</big><a class="headerlink" href="#pyspark.RDD.toLocalIterator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return an iterator that contains all of the elements in this RDD.
-The iterator will consume as much memory as the largest partition in this RDD.
-&gt;&gt;&gt; rdd = sc.parallelize(range(10))
-&gt;&gt;&gt; [x for x in rdd.toLocalIterator()]
-[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</p>
+The iterator will consume as much memory as the largest partition in this RDD.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">rdd</span><span class="o">.</span><span class="n">toLocalIterator</span><span class="p">()]</span>
+<span class="go">[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyspark.RDD.top">
 <tt class="descname">top</tt><big>(</big><em>num</em>, <em>key=None</em><big>)</big><a class="headerlink" href="#pyspark.RDD.top" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the top N elements from a RDD.</p>
+<p>Note that this method should only be used if the resulting array is expected
+to be small, as all the data is loaded into the driver&#8217;s memory.</p>
 <p>Note: It returns the list sorted in descending order.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">top</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">[12]</span>
@@ -2366,8 +2384,10 @@ method won&#8217;t trigger a spark job, which is different from
 <em class="property">class </em><tt class="descclassname">pyspark.</tt><tt class="descname">StorageLevel</tt><big>(</big><em>useDisk</em>, <em>useMemory</em>, <em>useOffHeap</em>, <em>deserialized</em>, <em>replication=1</em><big>)</big><a class="headerlink" href="#pyspark.StorageLevel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Flags for controlling the storage of an RDD. Each StorageLevel records whether to use memory,
 whether to drop the RDD to disk if it falls out of memory, whether to keep the data in memory
-in a serialized format, and whether to replicate the RDD partitions on multiple nodes.
-Also contains static constants for some commonly used storage levels, such as MEMORY_ONLY.</p>
+in a JAVA-specific serialized format, and whether to replicate the RDD partitions on multiple
+nodes. Also contains static constants for some commonly used storage levels, MEMORY_ONLY.
+Since the data is always serialized on the Python side, all the constants use the serialized
+formats.</p>
 <dl class="attribute">
 <dt id="pyspark.StorageLevel.DISK_ONLY">
 <tt class="descname">DISK_ONLY</tt><em class="property"> = StorageLevel(True, False, False, False, 1)</em><a class="headerlink" href="#pyspark.StorageLevel.DISK_ONLY" title="Permalink to this definition">¶</a></dt>
@@ -2380,12 +2400,12 @@ Also contains static constants for some commonly used storage levels, such as ME
 
 <dl class="attribute">
 <dt id="pyspark.StorageLevel.MEMORY_AND_DISK">
-<tt class="descname">MEMORY_AND_DISK</tt><em class="property"> = StorageLevel(True, True, False, True, 1)</em><a class="headerlink" href="#pyspark.StorageLevel.MEMORY_AND_DISK" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">MEMORY_AND_DISK</tt><em class="property"> = StorageLevel(True, True, False, False, 1)</em><a class="headerlink" href="#pyspark.StorageLevel.MEMORY_AND_DISK" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="pyspark.StorageLevel.MEMORY_AND_DISK_2">
-<tt class="descname">MEMORY_AND_DISK_2</tt><em class="property"> = StorageLevel(True, True, False, True, 2)</em><a class="headerlink" href="#pyspark.StorageLevel.MEMORY_AND_DISK_2" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">MEMORY_AND_DISK_2</tt><em class="property"> = StorageLevel(True, True, False, False, 2)</em><a class="headerlink" href="#pyspark.StorageLevel.MEMORY_AND_DISK_2" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -2400,12 +2420,12 @@ Also contains static constants for some commonly used storage levels, such as ME
 
 <dl class="attribute">
 <dt id="pyspark.StorageLevel.MEMORY_ONLY">
-<tt class="descname">MEMORY_ONLY</tt><em class="property"> = StorageLevel(False, True, False, True, 1)</em><a class="headerlink" href="#pyspark.StorageLevel.MEMORY_ONLY" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">MEMORY_ONLY</tt><em class="property"> = StorageLevel(False, True, False, False, 1)</em><a class="headerlink" href="#pyspark.StorageLevel.MEMORY_ONLY" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="pyspark.StorageLevel.MEMORY_ONLY_2">
-<tt class="descname">MEMORY_ONLY_2</tt><em class="property"> = StorageLevel(False, True, False, True, 2)</em><a class="headerlink" href="#pyspark.StorageLevel.MEMORY_ONLY_2" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">MEMORY_ONLY_2</tt><em class="property"> = StorageLevel(False, True, False, False, 2)</em><a class="headerlink" href="#pyspark.StorageLevel.MEMORY_ONLY_2" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -2420,7 +2440,7 @@ Also contains static constants for some commonly used storage levels, such as ME
 
 <dl class="attribute">
 <dt id="pyspark.StorageLevel.OFF_HEAP">
-<tt class="descname">OFF_HEAP</tt><em class="property"> = StorageLevel(False, False, True, False, 1)</em><a class="headerlink" href="#pyspark.StorageLevel.OFF_HEAP" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">OFF_HEAP</tt><em class="property"> = StorageLevel(True, True, True, False, 1)</em><a class="headerlink" href="#pyspark.StorageLevel.OFF_HEAP" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -2445,6 +2465,15 @@ Access its value through <tt class="xref py py-class docutils literal"><span cla
 </pre></div>
 </div>
 <dl class="method">
+<dt id="pyspark.Broadcast.destroy">
+<tt class="descname">destroy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyspark.Broadcast.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroy all data and metadata related to this broadcast variable.
+Use this with caution; once a broadcast variable has been destroyed,
+it cannot be used again. This method blocks until destroy has
+completed.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="pyspark.Broadcast.dump">
 <tt class="descname">dump</tt><big>(</big><em>value</em>, <em>f</em><big>)</big><a class="headerlink" href="#pyspark.Broadcast.dump" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -2457,7 +2486,17 @@ Access its value through <tt class="xref py py-class docutils literal"><span cla
 <dl class="method">
 <dt id="pyspark.Broadcast.unpersist">
 <tt class="descname">unpersist</tt><big>(</big><em>blocking=False</em><big>)</big><a class="headerlink" href="#pyspark.Broadcast.unpersist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Delete cached copies of this broadcast on the executors.</p>
+<dd><p>Delete cached copies of this broadcast on the executors. If the
+broadcast is used after this is called, it will need to be
+re-sent to each executor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>blocking</strong> &#8211; Whether to block until unpersisting has completed</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -2753,7 +2792,7 @@ cProfile and Accumulator</p>
           <a href="index.html" title="Welcome to Spark Python API Docs!"
              >previous</a> |</li>
     
-        <li><a href="index.html">PySpark 1.6.1 documentation</a> &raquo;</li>
+        <li><a href="index.html">PySpark 2.0.0 documentation</a> &raquo;</li>
  
       </ul>
     </div>
