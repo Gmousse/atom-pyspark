@@ -1,5 +1,5 @@
 # atom-pyspark package
-### v0.2.2
+### v0.2.3
 
 ![A screenshot of your package](https://raw.githubusercontent.com/Gmousse/atom-pyspark/master/anim.gif)
 

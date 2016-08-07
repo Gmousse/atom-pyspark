@@ -1,5 +1,14 @@
-## 0.1.0 - First Release
-* Adding PySpark Completions
-* Adding a documentation parser in order to generate completions
+# changelog
 
-## 0.2.0 - Publishing
+---
+
+## v0.2.3
+
+**Author**: Guillaume Mousnier.
+
+**Type**: Hotfix
+
+**Changes**:
+- Updating the api
+
+---
