@@ -1,4 +1,7 @@
 # atom-pyspark package
+
+ [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
 ### v0.2.6
 
 ![A screenshot of your package](https://raw.githubusercontent.com/Gmousse/atom-pyspark/master/anim.gif)
